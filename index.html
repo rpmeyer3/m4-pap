@@ -571,15 +571,8 @@
 </head>
 <body>
 
-<h1 class="page-title">FreshKeep — Low-Fidelity Wireframe Prototype</h1>
-<p class="page-subtitle">Group 11: Beer Buddies | CSCI 4800 | Click tabs and elements to navigate</p>
-
-<div class="task-selector">
-  <button class="task-btn" onclick="startTask(1)">Task 1: Check Expiration (Simple)</button>
-  <button class="task-btn" onclick="startTask(2)">Task 2: Scan Receipt (Moderate)</button>
-  <button class="task-btn" onclick="startTask(3)">Task 3: Connect Store (Complex)</button>
-  <button class="task-btn reset-btn" onclick="resetTask()">Reset / Free Explore</button>
-</div>
+<h1 class="page-title">FreshKeep</h1>
+<p class="page-subtitle">Grocery Inventory & Food Waste Tracker</p>
 
 <div class="phone">
   <div class="wf-label">LOW-FI PROTOTYPE</div>
@@ -629,7 +622,7 @@
       </svg>
     </div>
 
-    <div id="task-banner-home" class="task-banner"></div>
+    <div id="task-banner-home" class="task-banner" style="display:none;"></div>
 
     <!-- Quick actions -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
@@ -703,7 +696,7 @@
 
   <!-- ========== SCAN RECEIPT SCREEN ========== -->
   <div class="screen" id="screen-scan">
-    <div id="task-banner-scan" class="task-banner"></div>
+    <div id="task-banner-scan" class="task-banner" style="display:none;"></div>
     <div class="back-btn" onclick="showScreen('screen-home')">← Back</div>
     <div class="screen-header">
       <h2>Scan Receipt</h2>
@@ -779,7 +772,7 @@
 
   <!-- ========== INVENTORY SCREEN ========== -->
   <div class="screen" id="screen-inventory">
-    <div id="task-banner-inv" class="task-banner"></div>
+    <div id="task-banner-inv" class="task-banner" style="display:none;"></div>
     <div class="screen-header">
       <h2>Inventory</h2>
       <span style="font-size:20px;cursor:pointer;">⋯</span>
@@ -859,7 +852,7 @@
 
   <!-- ========== ITEM DETAIL: YOGURT ========== -->
   <div class="screen" id="screen-detail-yogurt">
-    <div id="task-banner-detail" class="task-banner"></div>
+    <div id="task-banner-detail" class="task-banner" style="display:none;"></div>
     <div class="back-btn" onclick="showScreen('screen-inventory')">← Back to Inventory</div>
 
     <div class="detail-header">
@@ -1043,7 +1036,7 @@
 
   <!-- ========== SETTINGS SCREEN ========== -->
   <div class="screen" id="screen-settings">
-    <div id="task-banner-settings" class="task-banner"></div>
+    <div id="task-banner-settings" class="task-banner" style="display:none;"></div>
     <div class="screen-header">
       <h2>Settings</h2>
     </div>
@@ -1154,7 +1147,6 @@
 </div>
 
 <p class="page-subtitle" style="margin-top:15px;max-width:400px;">
-  This interactive HTML wireframe serves as FreshKeep's low-fidelity prototype for Milestone 4 usability testing. Use the task buttons above to walk through each task flow.
 </p>
 
 <script>
@@ -1227,37 +1219,12 @@
     }
   }
 
-  function startTask(num) {
-    currentTask = num;
-    clearBanners();
-    resetScan();
-
-    // Update task button styling
-    document.querySelectorAll('.task-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
-
-    if (num === 1) {
-      showScreen('screen-home');
-      setBanner('home', '📋 Task 1: Find Greek Yogurt and check its expiration status. Tap "Inventory" →');
-      setBanner('inv', '📋 Task 1: Find Greek Yogurt in the list. Tap on it →');
-      setBanner('detail', '📋 Task 1: ✅ View the expiration date and AI assessment. Task complete!');
-    } else if (num === 2) {
-      showScreen('screen-home');
-      setBanner('home', '📋 Task 2: You have a grocery receipt to scan. Tap "Scan Receipt" →');
-      setBanner('scan', '📋 Task 2: Position receipt and tap "Capture Receipt", then review items →');
-    } else if (num === 3) {
-      showScreen('screen-home');
-      setBanner('home', '📋 Task 3: Connect your Kroger account. Navigate to Settings →');
-      setBanner('settings', '📋 Task 3: Tap "Connect" on Kroger, then configure notifications →');
-    }
-  }
-
+  // Task walkthrough (disabled for usability testing)
+  function startTask() {}
   function resetTask() {
-    currentTask = 0;
     clearBanners();
     resetScan();
     showScreen('screen-home');
-    document.querySelectorAll('.task-btn').forEach(b => b.classList.remove('active'));
 
     // Reset Kroger connection
     document.getElementById('kroger-status').textContent = 'Not connected';
