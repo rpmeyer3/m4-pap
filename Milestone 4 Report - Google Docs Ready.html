@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Milestone 4 Report — Copy to Google Docs</title>
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 0 24px;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #000;
+  }
+  h1 { font-size: 18pt; text-align: center; margin-bottom: 4px; }
+  .subtitle { text-align: center; font-size: 12pt; margin-bottom: 2px; }
+  h2 { font-size: 14pt; margin-top: 28px; margin-bottom: 8px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+  h3 { font-size: 12pt; margin-top: 18px; margin-bottom: 6px; }
+  p { margin: 8px 0; }
+  ul, ol { margin: 8px 0 8px 24px; }
+  li { margin-bottom: 4px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 11pt; }
+  th, td { border: 1px solid #000; padding: 6px 10px; text-align: left; }
+  th { background-color: #f0f0f0; font-weight: bold; }
+  .placeholder { color: #c00; font-weight: bold; }
+  .note { background: #fffbe6; border-left: 4px solid #e6a700; padding: 8px 12px; margin: 12px 0; font-size: 11pt; }
+  hr { border: none; border-top: 1px solid #ccc; margin: 24px 0; }
+</style>
+</head>
+<body>
+
+<h1>Milestone 4 Report</h1>
+<p class="subtitle">Dr. Jayalath | CSCI 4800 | Spring 2026 | University of Georgia</p>
+<p class="subtitle"><b>Prepared By: Group 11: Beer Buddies</b></p>
+<p class="subtitle">Ryan Meyer, Kristian Pitshugin, Matt Harpur, Daniel Fairchild</p>
+<p class="subtitle">April 13th, 2026</p>
+
+<hr>
+
+<h2>1. Introduction</h2>
+
+<h3>Mission Statement</h3>
+<p>FreshKeep exists to eliminate invisible food waste — the groceries that are purchased with good intentions but silently expire in the backs of refrigerators and pantries. Our mission is to bridge the gap between purchasing and consuming by transforming passive food storage into active, intelligent inventory awareness with near-zero effort from the user.</p>
+
+<h3>Problem/Solution Overview</h3>
+<p>Our needfinding across seven interviews and a 35-person survey revealed that 83% of respondents actively think about food waste, 80% are bothered by it, and yet 71% still throw away expired food sometimes or often. The core issue is not careless purchasing — it is that once groceries are stored, they enter a "forgotten state" where items become invisible until it is too late. Users described this as "an inevitable consequence of a busy lifestyle," and 97% said they would adopt a solution only if it required minimal effort.</p>
+<p>FreshKeep addresses this by using computer vision and ML to tokenize items from scanned receipts, automatically building a digital pantry inventory. Each item is matched against a food database to generate personalized expiration estimates. The app then surfaces timely reminders, suggests recipes using soon-to-expire ingredients, and tracks waste metrics over time — all without requiring users to manually catalog a single item.</p>
+
+<h3>Solution Choice and Reasoning</h3>
+<p>From our three finalist solutions in Milestone 3, we selected the <b>ML Receipt to Inventory Manager</b> (FreshKeep) over the Rotating Fridge Tray and the Second Look Visual Analysis Tool. The Rotating Fridge Tray, while creative, addresses only refrigerator visibility and requires physical hardware adoption — a significant barrier. The Second Look tool relies on users actively photographing each item, which directly conflicts with our finding that 97% of users demand a low-effort solution. FreshKeep, by contrast, requires only a single action (scanning one receipt) to log an entire shopping trip, making it the solution most aligned with user needs.</p>
+
+<h3>Task Descriptions</h3>
+<p><b>Task 1 — Simple: Check an item's expiration status.</b><br>
+The user opens the app, navigates to Inventory, and taps on an item (e.g., Greek Yogurt) to view its expiration date, storage location, and AI freshness assessment. Expected completion: under 30 seconds, 3 taps or fewer.</p>
+
+<p><b>Task 2 — Moderate: Scan a receipt and review imported items.</b><br>
+The user taps "Scan Receipt" from the Home screen, positions a grocery receipt within the camera frame, and reviews the list of automatically detected items. The user confirms correct items and corrects or removes any misidentified entries. Expected completion: 1–2 minutes.</p>
+
+<p><b>Task 3 — Complex: Connect a grocery store account and configure notifications.</b><br>
+The user navigates to Settings, selects a grocery store (e.g., Kroger), authorizes account linkage for automatic receipt import, reviews the first batch of synced items, and then configures notification preferences for expiration reminders. Expected completion: 3–5 minutes.</p>
+
+<h2>2. Sketches</h2>
+
+<p>We brainstormed five distinct design alternatives, each using a fundamentally different interaction paradigm, and produced 3–5 rough sketches per alternative (20 total).</p>
+
+<p><b>Alternative A: Tab-Based Dashboard</b><br>
+A conventional mobile app layout with a persistent bottom navigation bar (Home, Inventory, Stats, Settings). Users interact by tapping tabs and scrolling content feeds. Receipt scanning is accessed via a prominent camera button on the Home screen. This is the most familiar pattern for mobile users and minimizes the learning curve.</p>
+
+<p><b>Alternative B: Conversational Chat Interface</b><br>
+An AI chatbot-driven interface where users interact entirely through natural language input — typing or speaking commands like "What's expiring this week?" or "Add my Kroger receipt." The interface is minimal, consisting primarily of a chat thread and a text input field. While innovative, this design risks slower task completion for simple lookups.</p>
+
+<p><b>Alternative C: Widget-First Home Screen</b><br>
+The app's primary value is delivered through phone home screen widgets rather than an in-app experience. Widgets display expiring items, daily meal suggestions, and waste summaries. Users only open the full app for setup and receipt scanning. This maximizes passive awareness but limits discoverability of deeper features.</p>
+
+<p><b>Alternative D: Card-Swipe Interface</b><br>
+A swipe-based interaction model inspired by dating apps. Each day, the app presents a "deck" of food items needing attention. Users swipe right to confirm they still have the item, swipe left to mark it as used or discarded. While engaging, this interaction model is less efficient for users managing large inventories.</p>
+
+<p><b>Alternative E: Calendar/Timeline View</b><br>
+A calendar-centered layout that maps food items to their estimated expiration dates. Users scroll through a weekly or monthly view to see which items expire on which days, enabling meal planning around upcoming expirations. This approach emphasizes planning but may feel cluttered for users with many items.</p>
+
+<h2>3. Selected Interface Design</h2>
+
+<h3>Top Two Alternatives</h3>
+<p><b>Alternative A (Tab-Based Dashboard)</b> and <b>Alternative D (Card-Swipe Interface)</b> were selected as the top two based on team evaluation and alignment with user preferences for simplicity.</p>
+
+<p>Alternative A provides the most intuitive, universally recognizable navigation pattern. Users understand tab bars instinctively, and the design supports both quick glances (checking one item) and deep exploration (browsing full inventory, viewing stats). Wireflows showed smooth task completion for all three defined tasks.</p>
+
+<p>Alternative D offers a novel, engaging interaction that could improve daily check-in habits. However, wireflow analysis revealed friction for the complex task (store account connection), as the swipe metaphor does not naturally extend to settings and configuration flows.</p>
+
+<h3>Best Alternative: Tab-Based Dashboard (Alternative A)</h3>
+<p>We selected Alternative A as our final design. It scored highest on:</p>
+<ul>
+  <li><b>Learnability:</b> Familiar navigation pattern across iOS and Android.</li>
+  <li><b>Efficiency:</b> Direct access to all key features within 1–2 taps from any screen.</li>
+  <li><b>Scalability:</b> Cleanly supports additional features (recipes, household sharing, AI food check) without UI overhaul.</li>
+  <li><b>User alignment:</b> 97% of our participants demanded minimal effort — a tab-based layout reduces cognitive overhead to near zero.</li>
+</ul>
+
+<h3>Wireflows for Each Task</h3>
+<p><b>Task 1 wireflow (Simple):</b> Home → tap "Inventory" tab → scroll/search for item → tap item card → view Expiration Date, Storage Location, and AI Assessment.</p>
+
+<p><b>Task 2 wireflow (Moderate):</b> Home → tap "Scan Receipt" button → camera activates → position receipt in frame → auto-detect items → review detected items list → confirm/edit items → items added to Inventory.</p>
+
+<p><b>Task 3 wireflow (Complex):</b> Home → tap "Settings" tab → tap "Connected Stores" → tap "Connect" on desired store → authorize account → auto-import receipt history → review imported items → navigate to Notification Settings → configure reminder timing → save preferences.</p>
+
+<h2>4. Prototype</h2>
+
+<p>Our low-fidelity prototype was built as an interactive HTML/CSS wireframe simulating the FreshKeep mobile app. The prototype includes all screens necessary to complete the three defined tasks and uses a consistent visual style aligned with low-fi prototyping conventions.</p>
+
+<p>The prototype consists of the following screens:</p>
+<ol>
+  <li><b>Home Screen</b> — Displays quick-action buttons (Scan Receipt, Quick Sync) and a summary of expiring items.</li>
+  <li><b>Scan Receipt Screen</b> — Simulates camera-based receipt scanning with a detected items review list.</li>
+  <li><b>Inventory Screen</b> — Filterable list of all tracked food items by storage location (All, Fridge, Freezer, Pantry).</li>
+  <li><b>Item Detail Screen</b> — Individual item view showing expiration date, storage info, and AI freshness assessment.</li>
+  <li><b>Stats/Impact Screen</b> — Monthly waste and savings tracker with category breakdown.</li>
+  <li><b>Settings Screen</b> — Store account connections and notification configuration.</li>
+</ol>
+
+<p>The prototype supports click-through navigation between all screens via the bottom tab bar and interactive elements within each screen.</p>
+
+<h2>5. Testing Methodology</h2>
+
+<h3>Participants</h3>
+<p>We recruited three participants who are not friends, family, or classmates:</p>
+
+<table>
+  <tr><th>#</th><th>Name</th><th>Age</th><th>Occupation</th><th>Relevance</th></tr>
+  <tr><td>1</td><td class="placeholder">[PARTICIPANT 1 NAME]</td><td class="placeholder">[AGE]</td><td class="placeholder">[OCCUPATION]</td><td class="placeholder">[Why relevant to problem area]</td></tr>
+  <tr><td>2</td><td class="placeholder">[PARTICIPANT 2 NAME]</td><td class="placeholder">[AGE]</td><td class="placeholder">[OCCUPATION]</td><td class="placeholder">[Why relevant to problem area]</td></tr>
+  <tr><td>3</td><td class="placeholder">[PARTICIPANT 3 NAME]</td><td class="placeholder">[AGE]</td><td class="placeholder">[OCCUPATION]</td><td class="placeholder">[Why relevant to problem area]</td></tr>
+</table>
+
+<h3>Roles</h3>
+<ul>
+  <li><b>Facilitator:</b> Guides the participant through tasks, reads scripts, and asks follow-up questions.</li>
+  <li><b>Note-taker/Observer:</b> Documents participant actions, hesitations, errors, verbal comments, and timestamps.</li>
+  <li><b>Computer (Wizard of Oz):</b> Operates the prototype, advancing screens in response to participant interactions to simulate app behavior.</li>
+</ul>
+
+<h3>Demo Script</h3>
+<p>"Thank you for participating in our usability study. We are testing a prototype of a mobile app called FreshKeep that helps people track their grocery inventory and reduce food waste. We are testing the design, not you — there are no wrong answers. Please think aloud as you work through each task, telling us what you are looking at, what you expect to happen, and any confusion you experience. You may stop at any time."</p>
+
+<h3>Task Directions Given to Participants</h3>
+<p><b>Task 1:</b> "Imagine you just got home and want to check whether your Greek Yogurt is still good. Using the app, find the yogurt and determine its expiration status."</p>
+
+<p><b>Task 2:</b> "You just returned from Kroger with a paper receipt. Use the app to scan your receipt and review the items the app detected. Confirm the items are correct."</p>
+
+<p><b>Task 3:</b> "You want to set up your Kroger account so the app automatically imports your receipts in the future. Connect your store account and then configure your notification preferences for expiration reminders."</p>
+
+<h3>Usability Goals and Measurements</h3>
+<p><b>Goal 1: Efficiency</b> — Users should complete the simple task (check item expiration) quickly and with minimal navigation effort.</p>
+<ul>
+  <li><i>Measurement 1:</i> Time on task (target: ≤ 30 seconds)</li>
+  <li><i>Measurement 2:</i> Number of taps/screen transitions (target: ≤ 3)</li>
+</ul>
+
+<p><b>Goal 2: Learnability</b> — First-time users should complete the moderate task (scan receipt and review items) without external help.</p>
+<ul>
+  <li><i>Measurement 1:</i> Task completion rate (target: 100% success)</li>
+  <li><i>Measurement 2:</i> Number of errors or wrong-path navigations before completion (target: ≤ 1)</li>
+</ul>
+
+<h2>6. Results</h2>
+
+<div class="note">⚠️ FILL IN AFTER CONDUCTING USABILITY TESTS — Tables and structure are ready below. Replace red placeholders with real data.</div>
+
+<h3>Quantitative Results</h3>
+<table>
+  <tr><th>Participant</th><th>Task 1 Time</th><th>Task 1 Taps</th><th>Task 2 Success</th><th>Task 2 Errors</th><th>Task 3 Success</th><th>Task 3 Time</th></tr>
+  <tr><td>P1</td><td class="placeholder">[__s]</td><td class="placeholder">[__]</td><td class="placeholder">[Y/N]</td><td class="placeholder">[__]</td><td class="placeholder">[Y/N]</td><td class="placeholder">[__s]</td></tr>
+  <tr><td>P2</td><td class="placeholder">[__s]</td><td class="placeholder">[__]</td><td class="placeholder">[Y/N]</td><td class="placeholder">[__]</td><td class="placeholder">[Y/N]</td><td class="placeholder">[__s]</td></tr>
+  <tr><td>P3</td><td class="placeholder">[__s]</td><td class="placeholder">[__]</td><td class="placeholder">[Y/N]</td><td class="placeholder">[__]</td><td class="placeholder">[Y/N]</td><td class="placeholder">[__s]</td></tr>
+</table>
+
+<h3>Critical Incidents</h3>
+<table>
+  <tr><th>#</th><th>Participant</th><th>Task</th><th>Description</th><th>Severity (0–4)</th></tr>
+  <tr><td>1</td><td class="placeholder">[P#]</td><td class="placeholder">[#]</td><td class="placeholder">[Describe what happened — e.g., "User tapped Reminders instead of Inventory to find item"]</td><td class="placeholder">[0–4]</td></tr>
+  <tr><td>2</td><td class="placeholder">[P#]</td><td class="placeholder">[#]</td><td class="placeholder">[Describe incident]</td><td class="placeholder">[0–4]</td></tr>
+  <tr><td>3</td><td class="placeholder">[P#]</td><td class="placeholder">[#]</td><td class="placeholder">[Describe incident]</td><td class="placeholder">[0–4]</td></tr>
+</table>
+
+<p><b>Severity Scale:</b></p>
+<ul>
+  <li>0 = Not a usability problem</li>
+  <li>1 = Cosmetic problem only</li>
+  <li>2 = Minor usability problem</li>
+  <li>3 = Major usability problem (causes significant delay or failure)</li>
+  <li>4 = Usability catastrophe (prevents task completion)</li>
+</ul>
+
+<h3>Goal 1 (Efficiency) Assessment</h3>
+<p class="placeholder">[Summarize whether the 30-second / 3-tap targets were met or missed. Note any patterns across participants.]</p>
+
+<h3>Goal 2 (Learnability) Assessment</h3>
+<p class="placeholder">[Summarize task completion rates and error counts for Task 2. Note whether participants needed hints.]</p>
+
+<h2>7. Discussion</h2>
+
+<div class="note">⚠️ FILL IN AFTER CONDUCTING USABILITY TESTS — Use the prompts below as a guide for what to write.</div>
+
+<h3>What Worked Well</h3>
+<p class="placeholder">[Describe aspects of the design that participants navigated smoothly. For example: "All three participants immediately identified the Inventory tab as the correct starting point for Task 1, completing it well under the 30-second target."]</p>
+
+<h3>What Needs Improvement</h3>
+<p class="placeholder">[Describe pain points uncovered. For example: "Two participants expected the Scan Receipt button to be on the Inventory screen rather than the Home screen, causing initial confusion in Task 2." Or: "The Settings → Connected Stores path was not intuitive; P2 looked under the Home screen first."]</p>
+
+<h3>Design Recommendations</h3>
+<p class="placeholder">[List 2–4 concrete changes for the next iteration. For example:]</p>
+<ol>
+  <li class="placeholder">Add a "Scan" shortcut button to the Inventory screen in addition to Home.</li>
+  <li class="placeholder">Rename "Connected Stores" to "Link My Grocery Accounts" for clearer labeling.</li>
+  <li class="placeholder">Add an onboarding tooltip the first time a user opens the app pointing to the Scan Receipt feature.</li>
+  <li class="placeholder">Increase the visual prominence of the notification settings within the Settings screen.</li>
+</ol>
+
+<h3>Limitations</h3>
+<p class="placeholder">[Note limitations: small sample size (3 participants), Wizard of Oz prototype rather than functional software, participants may not represent full target demographic. Note any tasks that could not be fully tested due to prototype fidelity.]</p>
+
+<h2>8. Appendices</h2>
+
+<h3>Appendix A: All 20 Design Sketches</h3>
+<p class="placeholder">[Insert photos/scans of the 3–5 rough sketches per each of the 5 design alternatives]</p>
+
+<h3>Appendix B: Wireflows for Top 2 Alternatives</h3>
+<p class="placeholder">[Insert detailed wireflow diagrams for Alternative A (Tab-Based Dashboard) and Alternative D (Card-Swipe Interface)]</p>
+
+<h3>Appendix C: Detailed Wireflows for Final Design (Alternative A)</h3>
+<p class="placeholder">[Insert the detailed wireflow for each of the 3 tasks — can use screenshots from the HTML prototype]</p>
+
+<h3>Appendix D: Participant Consent Documentation</h3>
+<p class="placeholder">[Include signed consent forms or verbal consent confirmations]</p>
+
+<h3>Appendix E: Raw Testing Notes</h3>
+<p class="placeholder">[Include the note-taker's raw observation notes from each participant session]</p>
+
+<h3>Appendix F: Contribution Table</h3>
+<table>
+  <tr><th>Team Member</th><th>Contributions</th></tr>
+  <tr><td>Ryan Meyer</td><td class="placeholder">[List specific contributions]</td></tr>
+  <tr><td>Kristian Pitshugin</td><td class="placeholder">[List specific contributions]</td></tr>
+  <tr><td>Matt Harpur</td><td class="placeholder">[List specific contributions]</td></tr>
+  <tr><td>Daniel Fairchild</td><td class="placeholder">[List specific contributions]</td></tr>
+</table>
+
+<hr>
+<p><i>Word count (excluding tables, headings, appendices): ~1,950 words</i></p>
+
+</body>
+</html>
