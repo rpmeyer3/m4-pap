@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshKeep — Low-Fi Wireframe Prototype</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #e8e8e8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  h1.page-title {
+    font-size: 18px;
+    color: #333;
+    margin: 20px 0 5px;
+    text-align: center;
+  }
+  p.page-subtitle {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .phone {
+    width: 375px;
+    height: 812px;
+    background: #fff;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    border: 3px solid #333;
+  }
+  .status-bar {
+    height: 44px;
+    background: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+  }
+  .status-bar .time { font-weight: 700; }
+  .status-bar .icons { font-size: 12px; letter-spacing: 4px; }
+
+  /* Screens */
+  .screen {
+    display: none;
+    height: calc(812px - 44px - 70px);
+    overflow-y: auto;
+    padding: 16px;
+    background: #fafafa;
+  }
+  .screen.active { display: block; }
+
+  /* Header within screen */
+  .screen-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .screen-header h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .screen-header .app-icon {
+    width: 32px; height: 32px;
+    background: #2d6a4f;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 16px; font-weight: 700;
+  }
+
+  /* Cards */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1.5px solid #e0e0e0;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .card:hover { border-color: #2d6a4f; }
+  .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; color: #1a1a1a; }
+  .card p { font-size: 13px; color: #666; line-height: 1.4; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid #2d6a4f;
+    background: #2d6a4f;
+    color: white;
+    transition: all 0.15s;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .btn:hover { background: #1b4332; border-color: #1b4332; }
+  .btn-outline {
+    background: white;
+    color: #2d6a4f;
+  }
+  .btn-outline:hover { background: #f0faf4; }
+  .btn-sm {
+    padding: 8px 14px;
+    font-size: 13px;
+    width: auto;
+  }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-red { background: #fde8e8; color: #c0392b; }
+  .tag-orange { background: #fef3e2; color: #e67e22; }
+  .tag-green { background: #e8f8e8; color: #27ae60; }
+  .tag-blue { background: #e8f0fe; color: #2980b9; }
+
+  /* Expiring item row */
+  .item-row {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .item-row:hover { border-color: #2d6a4f; }
+  .item-row .item-icon {
+    width: 44px; height: 44px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  .item-row .item-info { flex: 1; }
+  .item-row .item-info .item-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+  .item-row .item-info .item-meta { font-size: 12px; color: #888; margin-top: 2px; }
+  .item-row .item-days {
+    font-size: 13px; font-weight: 700;
+    text-align: right;
+    min-width: 60px;
+  }
+  .days-red { color: #c0392b; }
+  .days-orange { color: #e67e22; }
+  .days-green { color: #27ae60; }
+
+  /* Progress bar */
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #eee;
+    border-radius: 3px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+  .progress-bar .fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+  .fill-red { background: #e74c3c; }
+  .fill-orange { background: #f39c12; }
+  .fill-green { background: #2ecc71; }
+
+  /* Section label */
+  .section-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 16px 0 8px;
+  }
+
+  /* Tab bar */
+  .tab-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: #fff;
+    border-top: 1.5px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-bottom: 8px;
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+  .tab:hover { background: #f0faf4; }
+  .tab.active .tab-label { color: #2d6a4f; font-weight: 700; }
+  .tab.active .tab-icon { color: #2d6a4f; }
+  .tab-icon { font-size: 22px; color: #999; margin-bottom: 2px; }
+  .tab-label { font-size: 10px; color: #999; font-weight: 500; }
+
+  /* Filter pills */
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .filter-pill {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid #ddd;
+    background: #fff;
+    color: #666;
+    transition: all 0.15s;
+  }
+  .filter-pill.active {
+    background: #2d6a4f;
+    color: white;
+    border-color: #2d6a4f;
+  }
+  .filter-pill:hover { border-color: #2d6a4f; }
+
+  /* Store row */
+  .store-row {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .store-row .store-icon {
+    width: 40px; height: 40px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-right: 12px;
+  }
+  .store-row .store-info { flex: 1; }
+  .store-row .store-info .store-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+  .store-row .store-info .store-meta { font-size: 12px; color: #888; margin-top: 2px; }
+
+  /* Stat block */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-box {
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-box .stat-value { font-size: 28px; font-weight: 800; }
+  .stat-box .stat-label { font-size: 12px; color: #888; margin-top: 4px; }
+  .stat-box .stat-change { font-size: 11px; margin-top: 4px; font-weight: 600; }
+
+  /* Camera simulation */
+  .camera-area {
+    width: 100%;
+    height: 260px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #999;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .camera-area .frame {
+    width: 220px; height: 160px;
+    border: 2px dashed #2d6a4f;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .camera-area .frame-label {
+    color: #aaa;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .camera-area .cam-icon { font-size: 36px; color: #555; }
+
+  /* Detail view */
+  .detail-header {
+    text-align: center;
+    padding: 20px 0;
+  }
+  .detail-header .detail-icon {
+    width: 80px; height: 80px;
+    background: #f0f0f0;
+    border-radius: 20px;
+    margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+  }
+  .detail-header h2 { font-size: 22px; color: #1a1a1a; }
+  .detail-header p { font-size: 14px; color: #888; }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .detail-cell {
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 12px;
+  }
+  .detail-cell .cell-label { font-size: 11px; color: #888; text-transform: uppercase; font-weight: 600; }
+  .detail-cell .cell-value { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-top: 4px; }
+
+  .ai-box {
+    background: #f0faf4;
+    border: 1.5px solid #b7e4c7;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+  }
+  .ai-box h4 { font-size: 14px; color: #2d6a4f; margin-bottom: 6px; }
+  .ai-box .confidence { font-size: 24px; font-weight: 800; color: #2d6a4f; }
+  .ai-box p { font-size: 13px; color: #555; line-height: 1.5; margin-top: 6px; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    color: #2d6a4f;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 8px;
+    padding: 4px 0;
+  }
+  .back-btn:hover { text-decoration: underline; }
+
+  /* Notification settings */
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px;
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .setting-row .setting-info .setting-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+  .setting-row .setting-info .setting-desc { font-size: 12px; color: #888; margin-top: 2px; }
+  .toggle {
+    width: 44px; height: 24px;
+    background: #ccc;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle.on { background: #2d6a4f; }
+  .toggle::after {
+    content: '';
+    width: 20px; height: 20px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px; left: 2px;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle.on::after { transform: translateX(20px); }
+
+  /* Recipe card */
+  .recipe-card {
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+  .recipe-card h4 { font-size: 15px; font-weight: 600; }
+  .recipe-card .recipe-meta { font-size: 12px; color: #888; margin-top: 4px; }
+  .recipe-card .recipe-tags { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .recipe-card .recipe-tag {
+    padding: 3px 8px;
+    background: #f4f4f4;
+    border-radius: 6px;
+    font-size: 11px;
+    color: #555;
+  }
+
+  /* Bar chart */
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .bar-label { width: 70px; font-size: 13px; color: #555; font-weight: 500; }
+  .bar-track { flex: 1; height: 16px; background: #eee; border-radius: 8px; overflow: hidden; margin: 0 8px; }
+  .bar-fill { height: 100%; border-radius: 8px; }
+  .bar-value { width: 40px; text-align: right; font-size: 13px; font-weight: 700; color: #555; }
+
+  /* Animations */
+  .screen { animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Detected items after scan */
+  .detected-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+  .detected-item .check {
+    width: 24px; height: 24px;
+    border: 2px solid #2d6a4f;
+    border-radius: 6px;
+    margin-right: 10px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    background: #2d6a4f;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .detected-item .det-info { flex: 1; }
+  .detected-item .det-name { font-size: 14px; font-weight: 600; }
+  .detected-item .det-exp { font-size: 11px; color: #888; }
+
+  /* Auth modal overlay */
+  .overlay {
+    display: none;
+    position: absolute;
+    top: 44px;
+    left: 0; right: 0; bottom: 70px;
+    background: rgba(0,0,0,0.5);
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .overlay.show { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+  }
+  .modal h3 { font-size: 18px; margin-bottom: 8px; }
+  .modal p { font-size: 13px; color: #666; margin-bottom: 16px; line-height: 1.4; }
+  .modal input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 8px;
+    outline: none;
+  }
+  .modal input:focus { border-color: #2d6a4f; }
+
+  /* Task flow indicator */
+  .task-banner {
+    background: #2d6a4f;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-align: center;
+    display: none;
+  }
+  .task-banner.show { display: block; }
+
+  /* Wireframe label */
+  .wf-label {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  /* Task selector outside phone */
+  .task-selector {
+    display: flex;
+    gap: 8px;
+    margin: 15px 0 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .task-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid #2d6a4f;
+    background: white;
+    color: #2d6a4f;
+    transition: all 0.15s;
+  }
+  .task-btn:hover, .task-btn.active {
+    background: #2d6a4f;
+    color: white;
+  }
+  .task-btn.reset-btn {
+    border-color: #888;
+    color: #888;
+  }
+  .task-btn.reset-btn:hover {
+    background: #888;
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">FreshKeep — Low-Fidelity Wireframe Prototype</h1>
+<p class="page-subtitle">Group 11: Beer Buddies | CSCI 4800 | Click tabs and elements to navigate</p>
+
+<div class="task-selector">
+  <button class="task-btn" onclick="startTask(1)">Task 1: Check Expiration (Simple)</button>
+  <button class="task-btn" onclick="startTask(2)">Task 2: Scan Receipt (Moderate)</button>
+  <button class="task-btn" onclick="startTask(3)">Task 3: Connect Store (Complex)</button>
+  <button class="task-btn reset-btn" onclick="resetTask()">Reset / Free Explore</button>
+</div>
+
+<div class="phone">
+  <div class="wf-label">LOW-FI PROTOTYPE</div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span class="time">9:41</span>
+    <span class="icons">●●● ▲ ■</span>
+  </div>
+
+  <!-- Auth Modal Overlay -->
+  <div class="overlay" id="authOverlay">
+    <div class="modal">
+      <h3>Connect Kroger</h3>
+      <p>Sign in to your Kroger account to enable automatic receipt import.</p>
+      <input type="text" placeholder="Email address" />
+      <input type="password" placeholder="Password" />
+      <button class="btn" onclick="completeAuth()" style="margin-top:8px;">Authorize & Connect</button>
+      <button class="btn btn-outline" onclick="closeAuth()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ========== HOME SCREEN ========== -->
+  <div class="screen active" id="screen-home">
+    <div id="task-banner-home" class="task-banner"></div>
+    <div class="screen-header">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="app-icon">F</div>
+        <h2>FreshKeep</h2>
+      </div>
+      <span style="font-size:20px;cursor:pointer;">⋯</span>
+    </div>
+
+    <!-- Quick actions -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+      <div class="card" onclick="showScreen('screen-scan')" style="text-align:center;">
+        <div style="font-size:28px;margin-bottom:4px;">📷</div>
+        <h3>Scan Receipt</h3>
+        <p>Camera import</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:28px;margin-bottom:4px;">⚡</div>
+        <h3>Quick Sync</h3>
+        <p>QR code scan</p>
+      </div>
+    </div>
+
+    <div class="section-label">⚠️ Expiring Soon · 2 items</div>
+    <div class="item-row" onclick="showScreen('screen-detail-spinach')">
+      <div class="item-icon">🥬</div>
+      <div class="item-info">
+        <div class="item-name">Spinach</div>
+        <div class="item-meta">Fridge · Added Apr 6</div>
+      </div>
+      <div class="item-days days-red">1 day<br>left</div>
+    </div>
+    <div class="item-row" onclick="showScreen('screen-detail-strawberries')">
+      <div class="item-icon">🍓</div>
+      <div class="item-info">
+        <div class="item-name">Strawberries</div>
+        <div class="item-meta">Fridge · Added Apr 5</div>
+      </div>
+      <div class="item-days days-red">2 days<br>left</div>
+    </div>
+
+    <div class="section-label">🕐 Use This Week · 3 items</div>
+    <div class="item-row" onclick="showScreen('screen-detail-yogurt')">
+      <div class="item-icon">🥛</div>
+      <div class="item-info">
+        <div class="item-name">Greek Yogurt</div>
+        <div class="item-meta">Fridge · Added Apr 2</div>
+      </div>
+      <div class="item-days days-orange">4 days<br>left</div>
+    </div>
+    <div class="item-row">
+      <div class="item-icon">🍄</div>
+      <div class="item-info">
+        <div class="item-name">Mushrooms</div>
+        <div class="item-meta">Fridge · Added Apr 4</div>
+      </div>
+      <div class="item-days days-orange">5 days<br>left</div>
+    </div>
+    <div class="item-row">
+      <div class="item-icon">🥚</div>
+      <div class="item-info">
+        <div class="item-name">Eggs (dozen)</div>
+        <div class="item-meta">Fridge · Added Apr 1</div>
+      </div>
+      <div class="item-days days-green">12 days<br>left</div>
+    </div>
+
+    <div class="section-label" style="margin-top:16px;">🍳 Recipe Idea</div>
+    <div class="recipe-card">
+      <h4>Spinach & Mushroom Frittata</h4>
+      <div class="recipe-meta">25 min · Uses 3 expiring ingredients</div>
+      <div class="recipe-tags">
+        <span class="recipe-tag">Spinach</span>
+        <span class="recipe-tag">Mushrooms</span>
+        <span class="recipe-tag">Eggs</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SCAN RECEIPT SCREEN ========== -->
+  <div class="screen" id="screen-scan">
+    <div id="task-banner-scan" class="task-banner"></div>
+    <div class="back-btn" onclick="showScreen('screen-home')">← Back</div>
+    <div class="screen-header">
+      <h2>Scan Receipt</h2>
+    </div>
+
+    <div class="camera-area">
+      <div class="frame">
+        <span class="cam-icon">📷</span>
+      </div>
+      <div class="frame-label">Position receipt within frame</div>
+    </div>
+
+    <button class="btn" onclick="showScanResults()">📸 Capture Receipt</button>
+
+    <div id="scan-results" style="display:none;">
+      <div class="section-label" style="margin-top:16px;">✅ Detected Items · 6 found</div>
+
+      <div class="detected-item">
+        <div class="check">✓</div>
+        <div class="det-info">
+          <div class="det-name">Whole Milk (1 gal)</div>
+          <div class="det-exp">Est. expiry: Apr 20</div>
+        </div>
+      </div>
+      <div class="detected-item">
+        <div class="check">✓</div>
+        <div class="det-info">
+          <div class="det-name">Chicken Breast (2 lb)</div>
+          <div class="det-exp">Est. expiry: Apr 12</div>
+        </div>
+      </div>
+      <div class="detected-item">
+        <div class="check">✓</div>
+        <div class="det-info">
+          <div class="det-name">Sliced Bread</div>
+          <div class="det-exp">Est. expiry: Apr 15</div>
+        </div>
+      </div>
+      <div class="detected-item">
+        <div class="check">✓</div>
+        <div class="det-info">
+          <div class="det-name">Baby Spinach (5 oz)</div>
+          <div class="det-exp">Est. expiry: Apr 13</div>
+        </div>
+      </div>
+      <div class="detected-item">
+        <div class="check">✓</div>
+        <div class="det-info">
+          <div class="det-name">Cheddar Cheese</div>
+          <div class="det-exp">Est. expiry: May 5</div>
+        </div>
+      </div>
+      <div class="detected-item">
+        <div class="check">✓</div>
+        <div class="det-info">
+          <div class="det-name">Bananas (bunch)</div>
+          <div class="det-exp">Est. expiry: Apr 14</div>
+        </div>
+      </div>
+
+      <button class="btn" onclick="confirmScanItems()" style="margin-top:10px;">Confirm All Items →</button>
+    </div>
+
+    <div id="scan-confirmed" style="display:none;">
+      <div style="text-align:center;padding:30px 0;">
+        <div style="font-size:48px;margin-bottom:12px;">✅</div>
+        <h3 style="color:#2d6a4f;font-size:20px;">6 Items Added!</h3>
+        <p style="color:#888;font-size:14px;margin-top:8px;">Your inventory has been updated.<br>We'll remind you before they expire.</p>
+        <button class="btn" onclick="showScreen('screen-inventory')" style="margin-top:20px;">View Inventory →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== INVENTORY SCREEN ========== -->
+  <div class="screen" id="screen-inventory">
+    <div id="task-banner-inv" class="task-banner"></div>
+    <div class="screen-header">
+      <h2>Inventory</h2>
+      <span style="font-size:20px;cursor:pointer;">⋯</span>
+    </div>
+
+    <div class="filters">
+      <div class="filter-pill active">All</div>
+      <div class="filter-pill" onclick="this.classList.toggle('active')">Fridge</div>
+      <div class="filter-pill" onclick="this.classList.toggle('active')">Freezer</div>
+      <div class="filter-pill" onclick="this.classList.toggle('active')">Pantry</div>
+    </div>
+
+    <div class="item-row" onclick="showScreen('screen-detail-spinach')">
+      <div class="item-icon">🥬</div>
+      <div class="item-info">
+        <div class="item-name">Spinach</div>
+        <div class="item-meta">Fridge · 1 day left</div>
+        <div class="progress-bar"><div class="fill fill-red" style="width:95%"></div></div>
+      </div>
+      <div class="item-days days-red">1d</div>
+    </div>
+    <div class="item-row" onclick="showScreen('screen-detail-strawberries')">
+      <div class="item-icon">🍓</div>
+      <div class="item-info">
+        <div class="item-name">Strawberries</div>
+        <div class="item-meta">Fridge · 2 days left</div>
+        <div class="progress-bar"><div class="fill fill-red" style="width:85%"></div></div>
+      </div>
+      <div class="item-days days-red">2d</div>
+    </div>
+    <div class="item-row" onclick="showScreen('screen-detail-yogurt')">
+      <div class="item-icon">🥛</div>
+      <div class="item-info">
+        <div class="item-name">Greek Yogurt</div>
+        <div class="item-meta">Fridge · 4 days left</div>
+        <div class="progress-bar"><div class="fill fill-orange" style="width:65%"></div></div>
+      </div>
+      <div class="item-days days-orange">4d</div>
+    </div>
+    <div class="item-row">
+      <div class="item-icon">🍄</div>
+      <div class="item-info">
+        <div class="item-name">Mushrooms</div>
+        <div class="item-meta">Fridge · 5 days left</div>
+        <div class="progress-bar"><div class="fill fill-orange" style="width:55%"></div></div>
+      </div>
+      <div class="item-days days-orange">5d</div>
+    </div>
+    <div class="item-row">
+      <div class="item-icon">🥚</div>
+      <div class="item-info">
+        <div class="item-name">Eggs (dozen)</div>
+        <div class="item-meta">Fridge · 12 days left</div>
+        <div class="progress-bar"><div class="fill fill-green" style="width:30%"></div></div>
+      </div>
+      <div class="item-days days-green">12d</div>
+    </div>
+    <div class="item-row">
+      <div class="item-icon">🧈</div>
+      <div class="item-info">
+        <div class="item-name">Butter</div>
+        <div class="item-meta">Fridge · 18 days left</div>
+        <div class="progress-bar"><div class="fill fill-green" style="width:15%"></div></div>
+      </div>
+      <div class="item-days days-green">18d</div>
+    </div>
+    <div class="item-row">
+      <div class="item-icon">🍝</div>
+      <div class="item-info">
+        <div class="item-name">Pasta (box)</div>
+        <div class="item-meta">Pantry · 180 days left</div>
+        <div class="progress-bar"><div class="fill fill-green" style="width:3%"></div></div>
+      </div>
+      <div class="item-days days-green">180d</div>
+    </div>
+  </div>
+
+  <!-- ========== ITEM DETAIL: YOGURT ========== -->
+  <div class="screen" id="screen-detail-yogurt">
+    <div id="task-banner-detail" class="task-banner"></div>
+    <div class="back-btn" onclick="showScreen('screen-inventory')">← Back to Inventory</div>
+
+    <div class="detail-header">
+      <div class="detail-icon">🥛</div>
+      <h2>Greek Yogurt</h2>
+      <p>Plain, 2% · Opened Apr 2, 2026</p>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-cell">
+        <div class="cell-label">Best By Date</div>
+        <div class="cell-value" style="color:#e67e22;">Apr 12, 2026</div>
+      </div>
+      <div class="detail-cell">
+        <div class="cell-label">Storage</div>
+        <div class="cell-value">Refrigerated</div>
+      </div>
+      <div class="detail-cell">
+        <div class="cell-label">Days Left</div>
+        <div class="cell-value" style="color:#e67e22;">4 days</div>
+      </div>
+      <div class="detail-cell">
+        <div class="cell-label">Added</div>
+        <div class="cell-value">Apr 2</div>
+      </div>
+    </div>
+
+    <div class="ai-box">
+      <h4>🤖 AI Assessment</h4>
+      <div style="display:flex;align-items:baseline;gap:8px;">
+        <span class="confidence">90%</span>
+        <span style="font-size:14px;font-weight:600;color:#2d6a4f;">Likely Safe to Consume</span>
+      </div>
+      <p>Yogurt stored properly can last 1–2 weeks past the printed date. Check for unusual smell, texture, or mold. If it looks and smells normal, it should be safe.</p>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-sm" style="flex:1;">✓ Mark Used</button>
+      <button class="btn btn-sm btn-outline" style="flex:1;">🗑 Discard</button>
+    </div>
+  </div>
+
+  <!-- ========== ITEM DETAIL: SPINACH ========== -->
+  <div class="screen" id="screen-detail-spinach">
+    <div class="back-btn" onclick="showScreen('screen-inventory')">← Back to Inventory</div>
+    <div class="detail-header">
+      <div class="detail-icon">🥬</div>
+      <h2>Spinach</h2>
+      <p>Baby Spinach, 5oz · Added Apr 6</p>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-cell">
+        <div class="cell-label">Best By Date</div>
+        <div class="cell-value" style="color:#c0392b;">Apr 9, 2026</div>
+      </div>
+      <div class="detail-cell">
+        <div class="cell-label">Storage</div>
+        <div class="cell-value">Refrigerated</div>
+      </div>
+      <div class="detail-cell">
+        <div class="cell-label">Days Left</div>
+        <div class="cell-value" style="color:#c0392b;">1 day</div>
+      </div>
+      <div class="detail-cell">
+        <div class="cell-label">Added</div>
+        <div class="cell-value">Apr 6</div>
+      </div>
+    </div>
+    <div class="ai-box" style="background:#fef3e2;border-color:#f0c27a;">
+      <h4 style="color:#e67e22;">⚠️ AI Assessment</h4>
+      <div style="display:flex;align-items:baseline;gap:8px;">
+        <span class="confidence" style="color:#e67e22;">60%</span>
+        <span style="font-size:14px;font-weight:600;color:#e67e22;">Use Today if Possible</span>
+      </div>
+      <p>Bagged spinach degrades quickly once opened. Check for sliminess, dark spots, or strong odor. If leaves are still crisp and bright green, cook or eat today.</p>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-sm" style="flex:1;">✓ Mark Used</button>
+      <button class="btn btn-sm btn-outline" style="flex:1;">🗑 Discard</button>
+    </div>
+  </div>
+
+  <!-- ========== ITEM DETAIL: STRAWBERRIES ========== -->
+  <div class="screen" id="screen-detail-strawberries">
+    <div class="back-btn" onclick="showScreen('screen-inventory')">← Back to Inventory</div>
+    <div class="detail-header">
+      <div class="detail-icon">🍓</div>
+      <h2>Strawberries</h2>
+      <p>Fresh, 1lb · Added Apr 5</p>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-cell">
+        <div class="cell-label">Best By Date</div>
+        <div class="cell-value" style="color:#c0392b;">Apr 10, 2026</div>
+      </div>
+      <div class="detail-cell">
+        <div class="cell-label">Storage</div>
+        <div class="cell-value">Refrigerated</div>
+      </div>
+      <div class="detail-cell">
+        <div class="cell-label">Days Left</div>
+        <div class="cell-value" style="color:#c0392b;">2 days</div>
+      </div>
+      <div class="detail-cell">
+        <div class="cell-label">Added</div>
+        <div class="cell-value">Apr 5</div>
+      </div>
+    </div>
+    <div class="ai-box">
+      <h4>🤖 AI Assessment</h4>
+      <div style="display:flex;align-items:baseline;gap:8px;">
+        <span class="confidence">75%</span>
+        <span style="font-size:14px;font-weight:600;color:#2d6a4f;">Still Good — Plan to Use Soon</span>
+      </div>
+      <p>Fresh strawberries typically last 3–7 days refrigerated. Inspect for mold or mushiness. Still-firm berries with no white fuzz are safe to eat.</p>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-sm" style="flex:1;">✓ Mark Used</button>
+      <button class="btn btn-sm btn-outline" style="flex:1;">🗑 Discard</button>
+    </div>
+  </div>
+
+  <!-- ========== STATS SCREEN ========== -->
+  <div class="screen" id="screen-stats">
+    <div class="screen-header">
+      <h2>Impact</h2>
+      <span style="font-size:20px;cursor:pointer;">⋯</span>
+    </div>
+
+    <div class="card" style="background:#f0faf4;border-color:#b7e4c7;text-align:center;margin-bottom:16px;">
+      <div style="font-size:13px;color:#2d6a4f;font-weight:600;">April 2026</div>
+      <div class="stat-grid" style="margin-top:10px;margin-bottom:0;">
+        <div>
+          <div style="font-size:28px;font-weight:800;color:#c0392b;">$38</div>
+          <div style="font-size:12px;color:#888;">Money Wasted</div>
+          <div style="font-size:11px;color:#27ae60;font-weight:600;">↓ 32% vs last month</div>
+        </div>
+        <div>
+          <div style="font-size:28px;font-weight:800;color:#27ae60;">$84</div>
+          <div style="font-size:12px;color:#888;">Food Saved</div>
+          <div style="font-size:11px;color:#27ae60;font-weight:600;">↑ 28% vs last month</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Top Wasted Categories</div>
+    <div class="bar-row">
+      <span class="bar-label">Produce</span>
+      <div class="bar-track"><div class="bar-fill fill-red" style="width:75%"></div></div>
+      <span class="bar-value">$18</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Dairy</span>
+      <div class="bar-track"><div class="bar-fill fill-orange" style="width:50%"></div></div>
+      <span class="bar-value">$12</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Bread</span>
+      <div class="bar-track"><div class="bar-fill fill-orange" style="width:33%"></div></div>
+      <span class="bar-value">$8</span>
+    </div>
+
+    <div class="section-label" style="margin-top:20px;">🌱 Environmental Impact</div>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-value" style="color:#27ae60;">4.2</div>
+        <div class="stat-label">lbs CO₂ saved</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value" style="color:#2980b9;">6.8</div>
+        <div class="stat-label">lbs food saved</div>
+      </div>
+    </div>
+
+    <div class="section-label">Monthly Trend</div>
+    <div class="card" style="text-align:center;color:#888;padding:30px;">
+      <div style="font-size:40px;">📊</div>
+      <p style="margin-top:8px;">Waste reduction graph<br>(Trending downward — keep it up!)</p>
+    </div>
+  </div>
+
+  <!-- ========== SETTINGS SCREEN ========== -->
+  <div class="screen" id="screen-settings">
+    <div id="task-banner-settings" class="task-banner"></div>
+    <div class="screen-header">
+      <h2>Settings</h2>
+    </div>
+
+    <div class="section-label">Connected Stores</div>
+    <p style="font-size:13px;color:#888;margin-bottom:10px;">Link your grocery accounts for automatic receipt import</p>
+
+    <div class="store-row">
+      <div class="store-icon">🏪</div>
+      <div class="store-info">
+        <div class="store-name">Kroger</div>
+        <div class="store-meta" id="kroger-status">Not connected</div>
+      </div>
+      <button class="btn btn-sm" id="kroger-btn" onclick="connectKroger()" style="width:auto;">Connect</button>
+    </div>
+    <div class="store-row">
+      <div class="store-icon">🏪</div>
+      <div class="store-info">
+        <div class="store-name">Publix</div>
+        <div class="store-meta">Last sync: 2 hours ago</div>
+      </div>
+      <span class="tag tag-green">Connected ✓</span>
+    </div>
+    <div class="store-row">
+      <div class="store-icon">🏪</div>
+      <div class="store-info">
+        <div class="store-name">Costco</div>
+        <div class="store-meta">Not connected</div>
+      </div>
+      <button class="btn btn-sm btn-outline" style="width:auto;">Connect</button>
+    </div>
+    <div class="store-row">
+      <div class="store-icon">🏪</div>
+      <div class="store-info">
+        <div class="store-name">Walmart</div>
+        <div class="store-meta">Not connected</div>
+      </div>
+      <button class="btn btn-sm btn-outline" style="width:auto;">Connect</button>
+    </div>
+
+    <div class="section-label" style="margin-top:20px;">Notification Preferences</div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-name">Expiration Reminders</div>
+        <div class="setting-desc">Notify when items are expiring soon</div>
+      </div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-name">3-Day Warning</div>
+        <div class="setting-desc">Alert 3 days before expiration</div>
+      </div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-name">Same-Day Alert</div>
+        <div class="setting-desc">Alert on the day of expiration</div>
+      </div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-name">Weekly Waste Summary</div>
+        <div class="setting-desc">Weekly report of food waste & savings</div>
+      </div>
+      <div class="toggle" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-name">Recipe Suggestions</div>
+        <div class="setting-desc">Suggest recipes using expiring items</div>
+      </div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+
+    <div class="section-label" style="margin-top:20px;">Account</div>
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-name">Household Members</div>
+        <div class="setting-desc">Manage shared inventory access</div>
+      </div>
+      <span style="color:#2d6a4f;font-weight:600;font-size:14px;">3 members →</span>
+    </div>
+  </div>
+
+  <!-- ========== TAB BAR ========== -->
+  <div class="tab-bar">
+    <div class="tab active" id="tab-home" onclick="showScreen('screen-home')">
+      <span class="tab-icon">🏠</span>
+      <span class="tab-label">Home</span>
+    </div>
+    <div class="tab" id="tab-inventory" onclick="showScreen('screen-inventory')">
+      <span class="tab-icon">🧊</span>
+      <span class="tab-label">Inventory</span>
+    </div>
+    <div class="tab" id="tab-stats" onclick="showScreen('screen-stats')">
+      <span class="tab-icon">📊</span>
+      <span class="tab-label">Stats</span>
+    </div>
+    <div class="tab" id="tab-settings" onclick="showScreen('screen-settings')">
+      <span class="tab-icon">⚙️</span>
+      <span class="tab-label">Settings</span>
+    </div>
+  </div>
+</div>
+
+<p class="page-subtitle" style="margin-top:15px;max-width:400px;">
+  This interactive HTML wireframe serves as FreshKeep's low-fidelity prototype for Milestone 4 usability testing. Use the task buttons above to walk through each task flow.
+</p>
+
+<script>
+  // Screen navigation
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    // Update tabs
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    if (id === 'screen-home') document.getElementById('tab-home').classList.add('active');
+    else if (id === 'screen-inventory') document.getElementById('tab-inventory').classList.add('active');
+    else if (id === 'screen-stats') document.getElementById('tab-stats').classList.add('active');
+    else if (id === 'screen-settings') document.getElementById('tab-settings').classList.add('active');
+    else if (id === 'screen-scan') document.getElementById('tab-home').classList.add('active');
+    else if (id.startsWith('screen-detail')) document.getElementById('tab-inventory').classList.add('active');
+  }
+
+  // Scan receipt flow
+  function showScanResults() {
+    document.getElementById('scan-results').style.display = 'block';
+  }
+
+  function confirmScanItems() {
+    document.getElementById('scan-results').style.display = 'none';
+    document.getElementById('scan-confirmed').style.display = 'block';
+    document.querySelector('#screen-scan .camera-area').style.display = 'none';
+    document.querySelector('#screen-scan .btn').style.display = 'none';
+  }
+
+  // Store connection flow
+  function connectKroger() {
+    document.getElementById('authOverlay').classList.add('show');
+  }
+
+  function closeAuth() {
+    document.getElementById('authOverlay').classList.remove('show');
+  }
+
+  function completeAuth() {
+    document.getElementById('authOverlay').classList.remove('show');
+    document.getElementById('kroger-status').textContent = 'Connected · Syncing...';
+    document.getElementById('kroger-status').style.color = '#27ae60';
+    document.getElementById('kroger-btn').textContent = 'Connected ✓';
+    document.getElementById('kroger-btn').style.background = '#27ae60';
+    document.getElementById('kroger-btn').style.borderColor = '#27ae60';
+    document.getElementById('kroger-btn').disabled = true;
+
+    setTimeout(() => {
+      document.getElementById('kroger-status').textContent = 'Auto-import enabled';
+    }, 1500);
+  }
+
+  // Task walkthrough
+  let currentTask = 0;
+
+  function clearBanners() {
+    document.querySelectorAll('.task-banner').forEach(b => {
+      b.classList.remove('show');
+      b.textContent = '';
+    });
+  }
+
+  function setBanner(screenId, text) {
+    const bannerId = 'task-banner-' + screenId;
+    const banner = document.getElementById(bannerId);
+    if (banner) {
+      banner.textContent = text;
+      banner.classList.add('show');
+    }
+  }
+
+  function startTask(num) {
+    currentTask = num;
+    clearBanners();
+    resetScan();
+
+    // Update task button styling
+    document.querySelectorAll('.task-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    if (num === 1) {
+      showScreen('screen-home');
+      setBanner('home', '📋 Task 1: Find Greek Yogurt and check its expiration status. Tap "Inventory" →');
+      setBanner('inv', '📋 Task 1: Find Greek Yogurt in the list. Tap on it →');
+      setBanner('detail', '📋 Task 1: ✅ View the expiration date and AI assessment. Task complete!');
+    } else if (num === 2) {
+      showScreen('screen-home');
+      setBanner('home', '📋 Task 2: You have a grocery receipt to scan. Tap "Scan Receipt" →');
+      setBanner('scan', '📋 Task 2: Position receipt and tap "Capture Receipt", then review items →');
+    } else if (num === 3) {
+      showScreen('screen-home');
+      setBanner('home', '📋 Task 3: Connect your Kroger account. Navigate to Settings →');
+      setBanner('settings', '📋 Task 3: Tap "Connect" on Kroger, then configure notifications →');
+    }
+  }
+
+  function resetTask() {
+    currentTask = 0;
+    clearBanners();
+    resetScan();
+    showScreen('screen-home');
+    document.querySelectorAll('.task-btn').forEach(b => b.classList.remove('active'));
+
+    // Reset Kroger connection
+    document.getElementById('kroger-status').textContent = 'Not connected';
+    document.getElementById('kroger-status').style.color = '';
+    document.getElementById('kroger-btn').textContent = 'Connect';
+    document.getElementById('kroger-btn').style.background = '#2d6a4f';
+    document.getElementById('kroger-btn').style.borderColor = '#2d6a4f';
+    document.getElementById('kroger-btn').disabled = false;
+  }
+
+  function resetScan() {
+    document.getElementById('scan-results').style.display = 'none';
+    document.getElementById('scan-confirmed').style.display = 'none';
+    const cam = document.querySelector('#screen-scan .camera-area');
+    if (cam) cam.style.display = '';
+    const captureBtn = document.querySelector('#screen-scan > .btn');
+    if (captureBtn) captureBtn.style.display = '';
+  }
+</script>
+</body>
+</html>
