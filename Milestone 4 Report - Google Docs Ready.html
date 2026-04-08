@@ -217,7 +217,7 @@ A calendar-centered layout that maps food items to their estimated expiration da
 </ol>
 
 <h3>Limitations</h3>
-<p class="placeholder">[Note limitations: small sample size (3 participants), Wizard of Oz prototype rather than functional software, participants may not represent full target demographic. Note any tasks that could not be fully tested due to prototype fidelity.]</p>
+<p>This study has several limitations that should be considered when interpreting the results. First, the sample size of three participants is small and may not capture the full range of usability issues a larger and more diverse group would reveal. Second, our prototype is a Wizard of Oz simulation rather than a functional application — participants could not actually scan a real receipt or receive live data from a connected store account, which may have affected the realism of their interactions and the validity of time-on-task measurements. Third, participants were recruited locally and may not fully represent our broader target demographic, which includes a wide age range (college students through retirees) and varying levels of technological comfort. Finally, the prototype did not include features like recipe suggestions, household sharing, or the AI food check in a fully interactive form, meaning these aspects of the design remain untested.</p>
 
 <h2>8. Appendices</h2>
 
@@ -228,7 +228,32 @@ A calendar-centered layout that maps food items to their estimated expiration da
 <p class="placeholder">[Insert detailed wireflow diagrams for Alternative A (Tab-Based Dashboard) and Alternative D (Card-Swipe Interface)]</p>
 
 <h3>Appendix C: Detailed Wireflows for Final Design (Alternative A)</h3>
-<p class="placeholder">[Insert the detailed wireflow for each of the 3 tasks — can use screenshots from the HTML prototype]</p>
+<p><i>[Insert screenshots from the HTML prototype alongside these descriptions]</i></p>
+
+<p><b>Task 1 Wireflow — Check Item Expiration (Simple):</b></p>
+<ol>
+  <li><b>Home Screen:</b> User sees the FreshKeep home screen with quick-action buttons (Scan Receipt, Quick Sync) and a list of expiring items sorted by urgency.</li>
+  <li><b>Tap "Inventory" tab:</b> Bottom navigation bar switches to the Inventory screen showing all tracked items with color-coded expiration progress bars (red = urgent, orange = soon, green = fresh) and filter pills (All, Fridge, Freezer, Pantry).</li>
+  <li><b>Tap "Greek Yogurt" row:</b> Item Detail screen opens showing the item name, best-by date (Apr 12, 2026), storage location (Refrigerated), days remaining (4 days), and an AI Assessment box reading "90% — Likely Safe to Consume" with guidance text. User has completed the task.</li>
+</ol>
+
+<p><b>Task 2 Wireflow — Scan Receipt and Review Items (Moderate):</b></p>
+<ol>
+  <li><b>Home Screen:</b> User sees the "Scan Receipt" quick-action card with a camera icon.</li>
+  <li><b>Tap "Scan Receipt":</b> Scan Receipt screen opens showing a simulated camera viewfinder with a dashed green frame and the instruction "Position receipt within frame."</li>
+  <li><b>Tap "Capture Receipt":</b> The app processes the image. A "Detected Items" list appears below the camera area showing 6 items, each with a green checkmark, the item name (e.g., Whole Milk, Chicken Breast, Sliced Bread), and an estimated expiry date.</li>
+  <li><b>Review and tap "Confirm All Items":</b> A success confirmation screen appears showing "6 Items Added!" with the message "Your inventory has been updated. We'll remind you before they expire." User has completed the task.</li>
+  <li><b>Tap "View Inventory":</b> Navigates to the Inventory screen where the newly added items now appear in the list.</li>
+</ol>
+
+<p><b>Task 3 Wireflow — Connect Store Account and Configure Notifications (Complex):</b></p>
+<ol>
+  <li><b>Home Screen:</b> User starts at the home screen.</li>
+  <li><b>Tap "Settings" tab:</b> Bottom navigation switches to the Settings screen showing a "Connected Stores" section with four stores listed (Kroger, Publix, Costco, Walmart). Publix shows "Connected ✓" with "Last sync: 2 hours ago"; the other three show "Not connected" with a green "Connect" button.</li>
+  <li><b>Tap "Connect" on Kroger:</b> A modal overlay appears prompting the user to sign in to their Kroger account with email and password fields, an "Authorize &amp; Connect" button, and a "Cancel" button.</li>
+  <li><b>Enter credentials and tap "Authorize &amp; Connect":</b> The modal closes. The Kroger row now displays "Connected ✓" with the status "Auto-import enabled," confirming the account link was successful.</li>
+  <li><b>Scroll to "Notification Preferences":</b> Below the Connected Stores section, the user sees five toggle switches for Expiration Reminders, 3-Day Warning, Same-Day Alert, Weekly Waste Summary, and Recipe Suggestions. The user toggles each to their preferred setting. Task is complete.</li>
+</ol>
 
 <h3>Appendix D: Participant Consent Documentation</h3>
 <p class="placeholder">[Include signed consent forms or verbal consent confirmations]</p>
