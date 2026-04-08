@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreshKeep Low-Fi Wireframe Prototype</title>
+<title>FreshKeep — Low-Fi Wireframe Prototype</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #e8e8e8;
+    background: linear-gradient(160deg, #d4c5a9 0%, #b8c5a3 50%, #a8b896 100%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,37 +17,37 @@
   }
   h1.page-title {
     font-size: 18px;
-    color: #333;
+    color: #3b2f1e;
     margin: 20px 0 5px;
     text-align: center;
   }
   p.page-subtitle {
     font-size: 13px;
-    color: #666;
+    color: #5c4a32;
     margin-bottom: 15px;
     text-align: center;
   }
   .phone {
     width: 375px;
     height: 812px;
-    background: #fff;
+    background: #faf6ef;
     border-radius: 40px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 60px rgba(59,47,30,0.35);
     position: relative;
-    border: 3px solid #333;
+    border: 3px solid #5c4a32;
   }
   .status-bar {
     height: 44px;
-    background: #f8f8f8;
+    background: #3b5a3a;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 24px;
     font-size: 14px;
     font-weight: 600;
-    border-bottom: 1px solid #e0e0e0;
-    color: #333;
+    border-bottom: 1px solid #2e4a2d;
+    color: #f0ead6;
   }
   .status-bar .time { font-weight: 700; }
   .status-bar .icons { font-size: 12px; letter-spacing: 4px; }
@@ -58,7 +58,7 @@
     height: calc(812px - 44px - 70px);
     overflow-y: auto;
     padding: 16px;
-    background: #fafafa;
+    background: #faf6ef;
   }
   .screen.active { display: block; }
 
@@ -72,29 +72,29 @@
   .screen-header h2 {
     font-size: 26px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #3b2f1e;
   }
   .screen-header .app-icon {
     width: 32px; height: 32px;
-    background: #2d6a4f;
+    background: #4a7c59;
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 16px; font-weight: 700;
+    color: #f0ead6; font-size: 16px; font-weight: 700;
   }
 
   /* Cards */
   .card {
-    background: #fff;
+    background: #fffdf7;
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 12px;
-    border: 1.5px solid #e0e0e0;
+    border: 1.5px solid #d4c5a9;
     cursor: pointer;
     transition: border-color 0.15s;
   }
-  .card:hover { border-color: #2d6a4f; }
-  .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; color: #1a1a1a; }
-  .card p { font-size: 13px; color: #666; line-height: 1.4; }
+  .card:hover { border-color: #4a7c59; }
+  .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; color: #3b2f1e; }
+  .card p { font-size: 13px; color: #7a6b52; line-height: 1.4; }
 
   /* Buttons */
   .btn {
@@ -106,19 +106,19 @@
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    border: 2px solid #2d6a4f;
-    background: #2d6a4f;
-    color: white;
+    border: 2px solid #4a7c59;
+    background: #4a7c59;
+    color: #f0ead6;
     transition: all 0.15s;
     width: 100%;
     margin-bottom: 8px;
   }
-  .btn:hover { background: #1b4332; border-color: #1b4332; }
+  .btn:hover { background: #3b5a3a; border-color: #3b5a3a; }
   .btn-outline {
-    background: white;
-    color: #2d6a4f;
+    background: #fffdf7;
+    color: #4a7c59;
   }
-  .btn-outline:hover { background: #f0faf4; }
+  .btn-outline:hover { background: #f0ead6; }
   .btn-sm {
     padding: 8px 14px;
     font-size: 13px;
@@ -133,27 +133,27 @@
     font-size: 11px;
     font-weight: 600;
   }
-  .tag-red { background: #fde8e8; color: #c0392b; }
-  .tag-orange { background: #fef3e2; color: #e67e22; }
-  .tag-green { background: #e8f8e8; color: #27ae60; }
-  .tag-blue { background: #e8f0fe; color: #2980b9; }
+  .tag-red { background: #f5ddd0; color: #a0422a; }
+  .tag-orange { background: #faebd7; color: #b8733a; }
+  .tag-green { background: #dde8d6; color: #4a7c59; }
+  .tag-blue { background: #d6dfe8; color: #4a6b82; }
 
   /* Expiring item row */
   .item-row {
     display: flex;
     align-items: center;
     padding: 14px;
-    background: #fff;
-    border: 1.5px solid #e0e0e0;
+    background: #fffdf7;
+    border: 1.5px solid #d4c5a9;
     border-radius: 12px;
     margin-bottom: 8px;
     cursor: pointer;
     transition: border-color 0.15s;
   }
-  .item-row:hover { border-color: #2d6a4f; }
+  .item-row:hover { border-color: #4a7c59; }
   .item-row .item-icon {
     width: 44px; height: 44px;
-    background: #f0f0f0;
+    background: #ede5d3;
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 22px;
@@ -161,22 +161,22 @@
     flex-shrink: 0;
   }
   .item-row .item-info { flex: 1; }
-  .item-row .item-info .item-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
-  .item-row .item-info .item-meta { font-size: 12px; color: #888; margin-top: 2px; }
+  .item-row .item-info .item-name { font-size: 15px; font-weight: 600; color: #3b2f1e; }
+  .item-row .item-info .item-meta { font-size: 12px; color: #8a7b65; margin-top: 2px; }
   .item-row .item-days {
     font-size: 13px; font-weight: 700;
     text-align: right;
     min-width: 60px;
   }
-  .days-red { color: #c0392b; }
-  .days-orange { color: #e67e22; }
-  .days-green { color: #27ae60; }
+  .days-red { color: #a0422a; }
+  .days-orange { color: #b8733a; }
+  .days-green { color: #4a7c59; }
 
   /* Progress bar */
   .progress-bar {
     width: 100%;
     height: 6px;
-    background: #eee;
+    background: #e5dcc8;
     border-radius: 3px;
     margin-top: 6px;
     overflow: hidden;
@@ -186,15 +186,15 @@
     border-radius: 3px;
     transition: width 0.3s;
   }
-  .fill-red { background: #e74c3c; }
-  .fill-orange { background: #f39c12; }
-  .fill-green { background: #2ecc71; }
+  .fill-red { background: #a0422a; }
+  .fill-orange { background: #b8733a; }
+  .fill-green { background: #4a7c59; }
 
   /* Section label */
   .section-label {
     font-size: 13px;
     font-weight: 700;
-    color: #888;
+    color: #7a6b52;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin: 16px 0 8px;
@@ -207,8 +207,8 @@
     left: 0;
     right: 0;
     height: 70px;
-    background: #fff;
-    border-top: 1.5px solid #e0e0e0;
+    background: #3b5a3a;
+    border-top: 1.5px solid #2e4a2d;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -223,11 +223,11 @@
     border-radius: 8px;
     transition: background 0.15s;
   }
-  .tab:hover { background: #f0faf4; }
-  .tab.active .tab-label { color: #2d6a4f; font-weight: 700; }
-  .tab.active .tab-icon { color: #2d6a4f; }
-  .tab-icon { font-size: 22px; color: #999; margin-bottom: 2px; }
-  .tab-label { font-size: 10px; color: #999; font-weight: 500; }
+  .tab:hover { background: rgba(240,234,214,0.15); }
+  .tab.active .tab-label { color: #f0ead6; font-weight: 700; }
+  .tab.active .tab-icon { color: #f0ead6; }
+  .tab-icon { font-size: 22px; color: #8aad7a; margin-bottom: 2px; }
+  .tab-label { font-size: 10px; color: #8aad7a; font-weight: 500; }
 
   /* Filter pills */
   .filters {
@@ -242,39 +242,39 @@
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    border: 1.5px solid #ddd;
-    background: #fff;
-    color: #666;
+    border: 1.5px solid #d4c5a9;
+    background: #fffdf7;
+    color: #7a6b52;
     transition: all 0.15s;
   }
   .filter-pill.active {
-    background: #2d6a4f;
-    color: white;
-    border-color: #2d6a4f;
+    background: #4a7c59;
+    color: #f0ead6;
+    border-color: #4a7c59;
   }
-  .filter-pill:hover { border-color: #2d6a4f; }
+  .filter-pill:hover { border-color: #4a7c59; }
 
   /* Store row */
   .store-row {
     display: flex;
     align-items: center;
     padding: 14px;
-    background: #fff;
-    border: 1.5px solid #e0e0e0;
+    background: #fffdf7;
+    border: 1.5px solid #d4c5a9;
     border-radius: 12px;
     margin-bottom: 8px;
   }
   .store-row .store-icon {
     width: 40px; height: 40px;
-    background: #f0f0f0;
+    background: #ede5d3;
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 18px;
     margin-right: 12px;
   }
   .store-row .store-info { flex: 1; }
-  .store-row .store-info .store-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
-  .store-row .store-info .store-meta { font-size: 12px; color: #888; margin-top: 2px; }
+  .store-row .store-info .store-name { font-size: 15px; font-weight: 600; color: #3b2f1e; }
+  .store-row .store-info .store-meta { font-size: 12px; color: #8a7b65; margin-top: 2px; }
 
   /* Stat block */
   .stat-grid {
@@ -284,14 +284,14 @@
     margin-bottom: 16px;
   }
   .stat-box {
-    background: #fff;
-    border: 1.5px solid #e0e0e0;
+    background: #fffdf7;
+    border: 1.5px solid #d4c5a9;
     border-radius: 12px;
     padding: 16px;
     text-align: center;
   }
   .stat-box .stat-value { font-size: 28px; font-weight: 800; }
-  .stat-box .stat-label { font-size: 12px; color: #888; margin-top: 4px; }
+  .stat-box .stat-label { font-size: 12px; color: #8a7b65; margin-top: 4px; }
   .stat-box .stat-change { font-size: 11px; margin-top: 4px; font-weight: 600; }
 
   /* Camera simulation */
@@ -311,7 +311,7 @@
   }
   .camera-area .frame {
     width: 220px; height: 160px;
-    border: 2px dashed #2d6a4f;
+    border: 2px dashed #8aad7a;
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
   }
@@ -329,14 +329,14 @@
   }
   .detail-header .detail-icon {
     width: 80px; height: 80px;
-    background: #f0f0f0;
+    background: #ede5d3;
     border-radius: 20px;
     margin: 0 auto 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 40px;
   }
-  .detail-header h2 { font-size: 22px; color: #1a1a1a; }
-  .detail-header p { font-size: 14px; color: #888; }
+  .detail-header h2 { font-size: 22px; color: #3b2f1e; }
+  .detail-header p { font-size: 14px; color: #8a7b65; }
   .detail-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -344,31 +344,31 @@
     margin: 16px 0;
   }
   .detail-cell {
-    background: #fff;
-    border: 1.5px solid #e0e0e0;
+    background: #fffdf7;
+    border: 1.5px solid #d4c5a9;
     border-radius: 10px;
     padding: 12px;
   }
-  .detail-cell .cell-label { font-size: 11px; color: #888; text-transform: uppercase; font-weight: 600; }
-  .detail-cell .cell-value { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-top: 4px; }
+  .detail-cell .cell-label { font-size: 11px; color: #8a7b65; text-transform: uppercase; font-weight: 600; }
+  .detail-cell .cell-value { font-size: 15px; font-weight: 700; color: #3b2f1e; margin-top: 4px; }
 
   .ai-box {
-    background: #f0faf4;
-    border: 1.5px solid #b7e4c7;
+    background: #e8efe3;
+    border: 1.5px solid #a3c2a0;
     border-radius: 12px;
     padding: 16px;
     margin: 12px 0;
   }
-  .ai-box h4 { font-size: 14px; color: #2d6a4f; margin-bottom: 6px; }
-  .ai-box .confidence { font-size: 24px; font-weight: 800; color: #2d6a4f; }
-  .ai-box p { font-size: 13px; color: #555; line-height: 1.5; margin-top: 6px; }
+  .ai-box h4 { font-size: 14px; color: #3b5a3a; margin-bottom: 6px; }
+  .ai-box .confidence { font-size: 24px; font-weight: 800; color: #3b5a3a; }
+  .ai-box p { font-size: 13px; color: #5c4a32; line-height: 1.5; margin-top: 6px; }
 
   .back-btn {
     display: inline-flex;
     align-items: center;
     gap: 4px;
     font-size: 14px;
-    color: #2d6a4f;
+    color: #4a7c59;
     font-weight: 600;
     cursor: pointer;
     margin-bottom: 8px;
@@ -382,13 +382,13 @@
     align-items: center;
     justify-content: space-between;
     padding: 14px;
-    background: #fff;
-    border: 1.5px solid #e0e0e0;
+    background: #fffdf7;
+    border: 1.5px solid #d4c5a9;
     border-radius: 12px;
     margin-bottom: 8px;
   }
-  .setting-row .setting-info .setting-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
-  .setting-row .setting-info .setting-desc { font-size: 12px; color: #888; margin-top: 2px; }
+  .setting-row .setting-info .setting-name { font-size: 15px; font-weight: 600; color: #3b2f1e; }
+  .setting-row .setting-info .setting-desc { font-size: 12px; color: #8a7b65; margin-top: 2px; }
   .toggle {
     width: 44px; height: 24px;
     background: #ccc;
@@ -398,7 +398,7 @@
     transition: background 0.2s;
     flex-shrink: 0;
   }
-  .toggle.on { background: #2d6a4f; }
+  .toggle.on { background: #4a7c59; }
   .toggle::after {
     content: '';
     width: 20px; height: 20px;
@@ -413,21 +413,21 @@
 
   /* Recipe card */
   .recipe-card {
-    background: #fff;
-    border: 1.5px solid #e0e0e0;
+    background: #fffdf7;
+    border: 1.5px solid #d4c5a9;
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 10px;
   }
   .recipe-card h4 { font-size: 15px; font-weight: 600; }
-  .recipe-card .recipe-meta { font-size: 12px; color: #888; margin-top: 4px; }
+  .recipe-card .recipe-meta { font-size: 12px; color: #8a7b65; margin-top: 4px; }
   .recipe-card .recipe-tags { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
   .recipe-card .recipe-tag {
     padding: 3px 8px;
-    background: #f4f4f4;
+    background: #ede5d3;
     border-radius: 6px;
     font-size: 11px;
-    color: #555;
+    color: #5c4a32;
   }
 
   /* Bar chart */
@@ -436,10 +436,10 @@
     align-items: center;
     margin-bottom: 8px;
   }
-  .bar-label { width: 70px; font-size: 13px; color: #555; font-weight: 500; }
-  .bar-track { flex: 1; height: 16px; background: #eee; border-radius: 8px; overflow: hidden; margin: 0 8px; }
+  .bar-label { width: 70px; font-size: 13px; color: #5c4a32; font-weight: 500; }
+  .bar-track { flex: 1; height: 16px; background: #e5dcc8; border-radius: 8px; overflow: hidden; margin: 0 8px; }
   .bar-fill { height: 100%; border-radius: 8px; }
-  .bar-value { width: 40px; text-align: right; font-size: 13px; font-weight: 700; color: #555; }
+  .bar-value { width: 40px; text-align: right; font-size: 13px; font-weight: 700; color: #5c4a32; }
 
   /* Animations */
   .screen { animation: fadeIn 0.2s ease; }
@@ -450,27 +450,27 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    background: #fff;
-    border: 1.5px solid #e0e0e0;
+    background: #fffdf7;
+    border: 1.5px solid #d4c5a9;
     border-radius: 10px;
     margin-bottom: 6px;
   }
   .detected-item .check {
     width: 24px; height: 24px;
-    border: 2px solid #2d6a4f;
+    border: 2px solid #4a7c59;
     border-radius: 6px;
     margin-right: 10px;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
-    background: #2d6a4f;
+    background: #4a7c59;
     color: white;
     font-size: 14px;
     font-weight: 700;
     flex-shrink: 0;
   }
   .detected-item .det-info { flex: 1; }
-  .detected-item .det-name { font-size: 14px; font-weight: 600; }
-  .detected-item .det-exp { font-size: 11px; color: #888; }
+  .detected-item .det-name { font-size: 14px; font-weight: 600; color: #3b2f1e; }
+  .detected-item .det-exp { font-size: 11px; color: #8a7b65; }
 
   /* Auth modal overlay */
   .overlay {
@@ -486,30 +486,31 @@
   }
   .overlay.show { display: flex; }
   .modal {
-    background: #fff;
+    background: #faf6ef;
     border-radius: 16px;
     padding: 24px;
     width: 100%;
     max-width: 320px;
     text-align: center;
   }
-  .modal h3 { font-size: 18px; margin-bottom: 8px; }
-  .modal p { font-size: 13px; color: #666; margin-bottom: 16px; line-height: 1.4; }
+  .modal h3 { font-size: 18px; margin-bottom: 8px; color: #3b2f1e; }
+  .modal p { font-size: 13px; color: #7a6b52; margin-bottom: 16px; line-height: 1.4; }
   .modal input {
     width: 100%;
     padding: 10px 14px;
-    border: 1.5px solid #ddd;
+    border: 1.5px solid #d4c5a9;
     border-radius: 8px;
     font-size: 14px;
     margin-bottom: 8px;
     outline: none;
+    background: #fffdf7;
   }
-  .modal input:focus { border-color: #2d6a4f; }
+  .modal input:focus { border-color: #4a7c59; }
 
   /* Task flow indicator */
   .task-banner {
-    background: #2d6a4f;
-    color: white;
+    background: #3b5a3a;
+    color: #f0ead6;
     padding: 8px 14px;
     border-radius: 8px;
     font-size: 12px;
@@ -525,8 +526,8 @@
     position: absolute;
     top: 8px;
     right: 12px;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
+    background: rgba(59,47,30,0.7);
+    color: #f0ead6;
     padding: 2px 8px;
     border-radius: 4px;
     font-size: 10px;
@@ -549,22 +550,22 @@
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    border: 2px solid #2d6a4f;
-    background: white;
-    color: #2d6a4f;
+    border: 2px solid #4a7c59;
+    background: #faf6ef;
+    color: #4a7c59;
     transition: all 0.15s;
   }
   .task-btn:hover, .task-btn.active {
-    background: #2d6a4f;
-    color: white;
+    background: #4a7c59;
+    color: #f0ead6;
   }
   .task-btn.reset-btn {
-    border-color: #888;
-    color: #888;
+    border-color: #8a7b65;
+    color: #8a7b65;
   }
   .task-btn.reset-btn:hover {
-    background: #888;
-    color: white;
+    background: #8a7b65;
+    color: #f0ead6;
   }
 </style>
 </head>
@@ -603,14 +604,32 @@
 
   <!-- ========== HOME SCREEN ========== -->
   <div class="screen active" id="screen-home">
-    <div id="task-banner-home" class="task-banner"></div>
-    <div class="screen-header">
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div class="app-icon">F</div>
-        <h2>FreshKeep</h2>
-      </div>
-      <span style="font-size:20px;cursor:pointer;">⋯</span>
+    <!-- Mountain/Nature Banner -->
+    <div style="margin:-16px -16px 16px -16px; border-radius: 0; overflow:hidden; position:relative;">
+      <svg viewBox="0 0 375 120" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c4d4a8"/>
+            <stop offset="100%" stop-color="#e8dfc4"/>
+          </linearGradient>
+        </defs>
+        <rect width="375" height="120" fill="url(#sky)"/>
+        <!-- Sun -->
+        <circle cx="300" cy="32" r="18" fill="#e8c36a" opacity="0.8"/>
+        <!-- Far mountains -->
+        <polygon points="0,120 60,55 120,90 180,45 240,75 300,40 375,80 375,120" fill="#7a9a6d" opacity="0.5"/>
+        <!-- Near mountains -->
+        <polygon points="0,120 50,70 110,95 160,60 220,85 280,55 340,75 375,65 375,120" fill="#4a7c59" opacity="0.7"/>
+        <!-- Treeline -->
+        <polygon points="0,120 30,95 50,100 70,90 90,98 110,88 130,96 150,85 170,95 190,88 210,96 230,87 250,95 270,90 290,97 310,88 330,96 350,91 375,95 375,120" fill="#3b5a3a" opacity="0.8"/>
+        <!-- Ground -->
+        <rect y="108" width="375" height="12" fill="#5c4a32" opacity="0.3"/>
+        <!-- App name -->
+        <text x="187" y="108" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="22" font-weight="800" fill="#fffdf7" style="text-shadow:0 1px 4px rgba(59,47,30,0.4);">🌿 FreshKeep</text>
+      </svg>
     </div>
+
+    <div id="task-banner-home" class="task-banner"></div>
 
     <!-- Quick actions -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
@@ -751,8 +770,8 @@
     <div id="scan-confirmed" style="display:none;">
       <div style="text-align:center;padding:30px 0;">
         <div style="font-size:48px;margin-bottom:12px;">✅</div>
-        <h3 style="color:#2d6a4f;font-size:20px;">6 Items Added!</h3>
-        <p style="color:#888;font-size:14px;margin-top:8px;">Your inventory has been updated.<br>We'll remind you before they expire.</p>
+        <h3 style="color:#3b5a3a;font-size:20px;">6 Items Added!</h3>
+        <p style="color:#8a7b65;font-size:14px;margin-top:8px;">Your inventory has been updated.<br>We'll remind you before they expire.</p>
         <button class="btn" onclick="showScreen('screen-inventory')" style="margin-top:20px;">View Inventory →</button>
       </div>
     </div>
@@ -852,7 +871,7 @@
     <div class="detail-grid">
       <div class="detail-cell">
         <div class="cell-label">Best By Date</div>
-        <div class="cell-value" style="color:#e67e22;">Apr 12, 2026</div>
+        <div class="cell-value" style="color:#b8733a;">Apr 12, 2026</div>
       </div>
       <div class="detail-cell">
         <div class="cell-label">Storage</div>
@@ -860,7 +879,7 @@
       </div>
       <div class="detail-cell">
         <div class="cell-label">Days Left</div>
-        <div class="cell-value" style="color:#e67e22;">4 days</div>
+        <div class="cell-value" style="color:#b8733a;">4 days</div>
       </div>
       <div class="detail-cell">
         <div class="cell-label">Added</div>
@@ -872,7 +891,7 @@
       <h4>🤖 AI Assessment</h4>
       <div style="display:flex;align-items:baseline;gap:8px;">
         <span class="confidence">90%</span>
-        <span style="font-size:14px;font-weight:600;color:#2d6a4f;">Likely Safe to Consume</span>
+        <span style="font-size:14px;font-weight:600;color:#3b5a3a;">Likely Safe to Consume</span>
       </div>
       <p>Yogurt stored properly can last 1–2 weeks past the printed date. Check for unusual smell, texture, or mold. If it looks and smells normal, it should be safe.</p>
     </div>
@@ -894,7 +913,7 @@
     <div class="detail-grid">
       <div class="detail-cell">
         <div class="cell-label">Best By Date</div>
-        <div class="cell-value" style="color:#c0392b;">Apr 9, 2026</div>
+        <div class="cell-value" style="color:#a0422a;">Apr 9, 2026</div>
       </div>
       <div class="detail-cell">
         <div class="cell-label">Storage</div>
@@ -902,18 +921,18 @@
       </div>
       <div class="detail-cell">
         <div class="cell-label">Days Left</div>
-        <div class="cell-value" style="color:#c0392b;">1 day</div>
+        <div class="cell-value" style="color:#a0422a;">1 day</div>
       </div>
       <div class="detail-cell">
         <div class="cell-label">Added</div>
         <div class="cell-value">Apr 6</div>
       </div>
     </div>
-    <div class="ai-box" style="background:#fef3e2;border-color:#f0c27a;">
-      <h4 style="color:#e67e22;">⚠️ AI Assessment</h4>
+    <div class="ai-box" style="background:#faebd7;border-color:#d4a762;">
+      <h4 style="color:#b8733a;">⚠️ AI Assessment</h4>
       <div style="display:flex;align-items:baseline;gap:8px;">
-        <span class="confidence" style="color:#e67e22;">60%</span>
-        <span style="font-size:14px;font-weight:600;color:#e67e22;">Use Today if Possible</span>
+        <span class="confidence" style="color:#b8733a;">60%</span>
+        <span style="font-size:14px;font-weight:600;color:#b8733a;">Use Today if Possible</span>
       </div>
       <p>Bagged spinach degrades quickly once opened. Check for sliminess, dark spots, or strong odor. If leaves are still crisp and bright green, cook or eat today.</p>
     </div>
@@ -934,7 +953,7 @@
     <div class="detail-grid">
       <div class="detail-cell">
         <div class="cell-label">Best By Date</div>
-        <div class="cell-value" style="color:#c0392b;">Apr 10, 2026</div>
+        <div class="cell-value" style="color:#a0422a;">Apr 10, 2026</div>
       </div>
       <div class="detail-cell">
         <div class="cell-label">Storage</div>
@@ -942,7 +961,7 @@
       </div>
       <div class="detail-cell">
         <div class="cell-label">Days Left</div>
-        <div class="cell-value" style="color:#c0392b;">2 days</div>
+        <div class="cell-value" style="color:#a0422a;">2 days</div>
       </div>
       <div class="detail-cell">
         <div class="cell-label">Added</div>
@@ -953,7 +972,7 @@
       <h4>🤖 AI Assessment</h4>
       <div style="display:flex;align-items:baseline;gap:8px;">
         <span class="confidence">75%</span>
-        <span style="font-size:14px;font-weight:600;color:#2d6a4f;">Still Good — Plan to Use Soon</span>
+        <span style="font-size:14px;font-weight:600;color:#3b5a3a;">Still Good — Plan to Use Soon</span>
       </div>
       <p>Fresh strawberries typically last 3–7 days refrigerated. Inspect for mold or mushiness. Still-firm berries with no white fuzz are safe to eat.</p>
     </div>
@@ -970,18 +989,18 @@
       <span style="font-size:20px;cursor:pointer;">⋯</span>
     </div>
 
-    <div class="card" style="background:#f0faf4;border-color:#b7e4c7;text-align:center;margin-bottom:16px;">
-      <div style="font-size:13px;color:#2d6a4f;font-weight:600;">April 2026</div>
+    <div class="card" style="background:#e8efe3;border-color:#a3c2a0;text-align:center;margin-bottom:16px;">
+      <div style="font-size:13px;color:#3b5a3a;font-weight:600;">April 2026</div>
       <div class="stat-grid" style="margin-top:10px;margin-bottom:0;">
         <div>
-          <div style="font-size:28px;font-weight:800;color:#c0392b;">$38</div>
-          <div style="font-size:12px;color:#888;">Money Wasted</div>
-          <div style="font-size:11px;color:#27ae60;font-weight:600;">↓ 32% vs last month</div>
+          <div style="font-size:28px;font-weight:800;color:#a0422a;">$38</div>
+          <div style="font-size:12px;color:#8a7b65;">Money Wasted</div>
+          <div style="font-size:11px;color:#4a7c59;font-weight:600;">↓ 32% vs last month</div>
         </div>
         <div>
-          <div style="font-size:28px;font-weight:800;color:#27ae60;">$84</div>
-          <div style="font-size:12px;color:#888;">Food Saved</div>
-          <div style="font-size:11px;color:#27ae60;font-weight:600;">↑ 28% vs last month</div>
+          <div style="font-size:28px;font-weight:800;color:#4a7c59;">$84</div>
+          <div style="font-size:12px;color:#8a7b65;">Food Saved</div>
+          <div style="font-size:11px;color:#4a7c59;font-weight:600;">↑ 28% vs last month</div>
         </div>
       </div>
     </div>
@@ -1006,17 +1025,17 @@
     <div class="section-label" style="margin-top:20px;">🌱 Environmental Impact</div>
     <div class="stat-grid">
       <div class="stat-box">
-        <div class="stat-value" style="color:#27ae60;">4.2</div>
+        <div class="stat-value" style="color:#4a7c59;">4.2</div>
         <div class="stat-label">lbs CO₂ saved</div>
       </div>
       <div class="stat-box">
-        <div class="stat-value" style="color:#2980b9;">6.8</div>
+        <div class="stat-value" style="color:#4a6b82;">6.8</div>
         <div class="stat-label">lbs food saved</div>
       </div>
     </div>
 
     <div class="section-label">Monthly Trend</div>
-    <div class="card" style="text-align:center;color:#888;padding:30px;">
+    <div class="card" style="text-align:center;color:#8a7b65;padding:30px;">
       <div style="font-size:40px;">📊</div>
       <p style="margin-top:8px;">Waste reduction graph<br>(Trending downward — keep it up!)</p>
     </div>
@@ -1109,7 +1128,7 @@
         <div class="setting-name">Household Members</div>
         <div class="setting-desc">Manage shared inventory access</div>
       </div>
-      <span style="color:#2d6a4f;font-weight:600;font-size:14px;">3 members →</span>
+      <span style="color:#4a7c59;font-weight:600;font-size:14px;">3 members →</span>
     </div>
   </div>
 
@@ -1178,10 +1197,10 @@
   function completeAuth() {
     document.getElementById('authOverlay').classList.remove('show');
     document.getElementById('kroger-status').textContent = 'Connected · Syncing...';
-    document.getElementById('kroger-status').style.color = '#27ae60';
+    document.getElementById('kroger-status').style.color = '#4a7c59';
     document.getElementById('kroger-btn').textContent = 'Connected ✓';
-    document.getElementById('kroger-btn').style.background = '#27ae60';
-    document.getElementById('kroger-btn').style.borderColor = '#27ae60';
+    document.getElementById('kroger-btn').style.background = '#4a7c59';
+    document.getElementById('kroger-btn').style.borderColor = '#4a7c59';
     document.getElementById('kroger-btn').disabled = true;
 
     setTimeout(() => {
@@ -1244,8 +1263,8 @@
     document.getElementById('kroger-status').textContent = 'Not connected';
     document.getElementById('kroger-status').style.color = '';
     document.getElementById('kroger-btn').textContent = 'Connect';
-    document.getElementById('kroger-btn').style.background = '#2d6a4f';
-    document.getElementById('kroger-btn').style.borderColor = '#2d6a4f';
+    document.getElementById('kroger-btn').style.background = '#4a7c59';
+    document.getElementById('kroger-btn').style.borderColor = '#4a7c59';
     document.getElementById('kroger-btn').disabled = false;
   }
 
